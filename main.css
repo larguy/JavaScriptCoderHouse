@@ -1,0 +1,405 @@
+/* FORMATO PAGINA */
+
+.grid {
+        display: grid;
+        grid-template-columns: repeat(6.25rem) ;
+        grid-auto-rows: minmax(6.25rem, auto);
+        grid-template-areas:
+        " nav nav nav  nav "
+        " sb main main  main"
+        " asd main main  main "
+        " pie pie pie  pie ";
+        width: auto;
+        height: auto;
+}
+
+.nav {
+    grid-area: nav;
+}
+.pie {
+    grid-area: pie;
+    background-color: #155c0c93;
+}
+.main {
+    grid-area: main;
+}
+.asd {
+    grid-area: asd;
+background-color:#f2f560;
+}
+.sb {
+    grid-area: sb;
+    background-color: #c8ff00;
+}
+
+body{
+    font-family: 'Amatic SC', cursive;
+    font-size: 1.25rem;
+    height: auto;
+    
+
+}
+
+/* CENTRO DE PAGINA */
+.titulo{
+    margin-top: 6.25rem;
+}
+
+.entorno{
+    width: 100%;
+    background-color: green;
+    box-shadow: 7px 14px 37px grey;
+    border-radius: 5px;
+    border: 2px solid #010102;
+}
+
+.entorno section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 21.875rem;
+}
+
+.entorno h2{
+    color: white;
+    text-align: center;
+}
+
+/* MENU DE NAV */
+
+.menu{
+    width: 100%;
+    border-radius: 5px;
+    background-color: #155c0c93;
+    border-radius: 6px;
+    border: 2px solid #010102;
+    box-shadow: 7px 14px 37px rgb(2, 5, 44);
+    color: white;
+}
+
+.menu a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+.menu ul{
+    display: flex;
+    justify-content:space-around;
+    list-style: none;
+}
+/* CONTROL*/
+
+.puntosjuego{
+    display: flex;
+    justify-content: center;
+}
+
+.control{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.control div {
+    align-items: center;
+    
+}
+
+.switch{
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* CARTAS CENTRO */
+
+.cartas{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.cartas div{
+    justify-content: space-around;
+    margin-right: 0.625rem;   
+    padding: 0.9375rem;
+}
+
+.cartasjugadas{
+    justify-content: space-around;
+    margin-right: 0.625rem;
+    padding: 0.9375rem;
+}
+
+.cartasjugadas div{
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);   
+    margin: 0; 
+}
+
+.cartasdorso{
+    display: flex;
+    flex-direction: column;
+}
+
+#CartaDorso1{
+    -moz-transform: rotate(10deg);
+    -o-transform: rotate(10deg);
+    -webkit-transform: rotate(10deg);
+    transform: rotate(10deg);
+}
+#CartaDorso2{
+    margin-bottom: 0.625rem;
+}
+
+#CartaDorso1:hover{
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+}
+#CartaDorso2:hover{
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+}
+#CartaDorso3:hover{
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+}
+
+#CartaDorso3{
+    -moz-transform: rotate(-10deg);
+    -o-transform: rotate(-10deg);
+    -webkit-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+}
+
+.card-title {
+    margin-top: 10%;
+    margin-bottom: 18%;
+    font-size: 90%;
+}
+
+.botton{
+    text-decoration: none;
+    padding: 0.625rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #000000;
+    background-color: #00bbff;
+    border-radius: 6px;
+    border: 2px solid #010102;
+    box-shadow: 7px 14px 37px rgb(2, 5, 44);
+    }
+
+.button{
+    text-decoration: none;
+    padding: 0.3125rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #000000;
+    background-color: #00bbff;
+    border-radius: 6px;
+    border: 2px solid #010102;
+    box-shadow: 7px 14px 37px rgb(2, 5, 44);
+    }
+
+
+.imgCard{
+    box-shadow: 7px 14px 37px rgb(68, 68, 68);    
+}
+
+.tantos{
+    border-radius: 6px;
+    border: 2px solid #010102;
+    box-shadow: 7px 14px 37px rgb(2, 5, 44);
+    font-size: 120%;
+}
+
+.tantos table{
+    border-collapse:collapse
+}
+.tantos td {
+    border-style : hidden!important;
+}
+
+.card1{
+    -moz-transform: rotate(-10deg);
+    -o-transform: rotate(-10deg);
+    -webkit-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+    text-align: center;
+}
+.card1:hover{
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+}
+.card2{
+    margin-bottom: 3.125rem;
+    text-align: center;
+}
+.card2:hover{
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+}
+.card3:hover{
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+}
+.card3{
+    -moz-transform: rotate(10deg);
+    -o-transform: rotate(10deg);
+    -webkit-transform: rotate(10deg);
+    transform: rotate(10deg);
+    text-align: center;
+}
+
+
+/* TABLERO DE PUNTAJES */
+.centrado{    
+    text-align: center;
+    
+}
+
+.puntaje{
+    display: flex;
+   justify-content: center;
+}
+
+.puntaje table{
+    table-layout: fixed;
+    width: 7.5rem;
+    border: 1px solid red;
+    align-items: center;
+    width:30vh;
+    }
+
+.puntaje td {
+        border: 1px solid blue;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        
+}
+
+.quiero-noquiero{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.boton-quiero{
+    width: 50%;
+    text-decoration: none;
+    padding: 0.3125rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #000000;
+    background-color: #00bbff;
+    border-radius: 6px;
+    border: 2px solid #010102;
+    box-shadow: 7px 14px 37px rgb(2, 5, 44);
+}
+
+/* CONTROLES */
+.botton div{
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: center;
+}
+
+.botton-control{
+    margin-top: 10%;
+    display: flex;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 3.75rem;
+    height: 2.125rem;
+}
+
+
+/* Hide default HTML checkbox */
+.switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+/* The slider */
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 1.625rem;
+width: 1.625rem;
+left: 0.25rem;
+bottom: 0.25rem;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+input:checked + .slider {
+background-color: #2196F3;
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+-webkit-transform: translateX(26px);
+-ms-transform: translateX(26px);
+transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+border-radius: 2.125rem;
+}
+
+.slider.round:before {
+border-radius: 50%;
+}
+
+/* FORMATO DEL FOOTER */
+.formato-botones{
+    height: 15.625rem;
+    width: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
+    border-radius: 6px;
+    border: 2px solid #010102;
+    box-shadow: 7px 14px 37px rgb(2, 5, 44);
+}
+
+.titulos { 
+    font-weight: 900;
+}
+
+.estilotextarea2 {
+    background-color: transparent;
+    border: none;
+    font-family:inherit;
+    font-size: 1.2em;
+    word-break: break-all;
+}
