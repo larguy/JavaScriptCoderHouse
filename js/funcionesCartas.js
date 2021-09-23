@@ -58,17 +58,6 @@ function removerCartasTercera(manoaBorrar){
         manoaBorrar[0] = 0;
 }
 
-//                  SIN USO                  
-/* // LIMPIA LA MANO AL TERMINAR
-function limpiarManos(){
-    for(i=0 ; i <manoOponente.length; i++){
-        manoJugador.pop();
-    }
-    for(i=0 ; i <manoOponente.length; i++){
-        manoOponente.pop();
-    }
-} */
-
 
 // Metodo para calcular los tantos del envido
 function siContieneNegras(carta1, carta2){
@@ -119,6 +108,7 @@ function manoAleatoria() {
         soyMano = true;
         mostarVisorTexto(`Empiezas Jugando tu, ya que eres Mano`);
     }
+    return yaSeJugo = "si";
 }
 
 
@@ -170,11 +160,11 @@ function cantarEnvido(){
             $(`#real-envido`).show();
             $(`#falta-envido`).show();
             if( puntosEnvidoJugador > puntosEnvidoOponente ){
-                mostarVisorTexto(`Ganaste el Envido con ${puntosEnvidoJugador} a la web que tenia ${puntosEnvidoOponente} `);
+                mostarVisorTexto(`Ganaste el Envido tenias ${puntosEnvidoJugador} y la Web tenia ${puntosEnvidoOponente} `);
                 puntajeJugador++;
                 
             }else if(puntosEnvidoJugador < puntosEnvidoOponente){
-                mostarVisorTexto(`Perdiste el Envido con ${puntosEnvidoJugador} a la web que tenia ${puntosEnvidoOponente} `);
+                mostarVisorTexto(`Perdiste el Envido tenias ${puntosEnvidoJugador} y la Web te Gano con ${puntosEnvidoOponente} `);
                 puntajeWeb++;
                 
             }else if(puntosEnvidoJugador == puntosEnvidoOponente){
@@ -196,7 +186,7 @@ function cantarEnvido(){
     gurdarPuntosJugadorLStorage(puntajeJugador);
     gurdarPuntosWebLStorage(puntajeWeb);
     ganadorJuego();
-
+    ocultarEnvido();
 }
 
 // OPCION SI NO TE GUSTA LA MANO Y NO QUERES JUGAR ESTA RONDA
@@ -208,10 +198,12 @@ function irAlMazo(){
         puntajeWeb = parseInt( puntajeWeb) +2;
         gurdarPuntosWebLStorage(puntajeWeb);
     }
+    $(`#carta1`).remove();
+    $(`#carta2`).remove();
+    $(`#carta3`).remove();
     $(`#CartaDorso1`).remove();
     $(`#CartaDorso2`).remove();
     $(`#CartaDorso3`).remove();
-    cambioDeMano();
     ganadorJuego();
     ocultarbotones();
 }
@@ -220,12 +212,12 @@ function irAlMazo(){
 function ganadorJuego(){
     if ((puntajeWeb >= puntosAjugar) || (puntajeJugador >= puntosAjugar)){
         if(puntajeWeb > puntosAjugar){
-        mostarVisorTexto(`PERDISTE!!!
+            return mostarVisorTexto(`PERDISTE!!!
         Puntajes Finales
         ${jugador}     tienes: ${puntajeJugador}
             la Web: ${puntajeWeb}`);
         }else{
-            mostarVisorTexto(`GANASTE!!!
+            return mostarVisorTexto(`GANASTE!!!
         Puntajes Finales
         ${jugador}     tienes: ${puntajeJugador}
                         la Web: ${puntajeWeb}`);
@@ -233,18 +225,9 @@ function ganadorJuego(){
     }
 }
 
-//CAMBIA DE MANO CADA VEZ QUE SE REPARTE
-function cambioDeMano(soyMano) {
-    if(soyMano = true){
-        soyMano = false;
-    }else{
-        soyMano = true;
-    }
-    return soyMano
-}
 
 
-function terminoMano(string){
+function terminoMano(){
 
     puntajeJugador = parseInt( puntajeJugador );
     gurdarPuntosJugadorLStorage(puntajeJugador);
@@ -256,44 +239,10 @@ function terminoMano(string){
     $(`#CartaDorso2`).remove();
     $(`#CartaDorso3`).remove();
     ganadorJuego();
-    cambioDeMano();
     return ocultarbotones();
 }
 
-/* 
-function validacionQuiero() {
-    if(validarQuiero == "aun no acepto"){
-        break;
-    }else if(validarQuiero == "acepto"){
-        return true
-    }else if(validarQuiero == "no acepto"){
-        return false
-    }
-}
 
-function quiero(){
-    validarQuiero == "acepto";
-    return true;
-}
-function noQuiero(){
-    validarQuiero == "no acepto";
-    return false;
-} 
-
- */
-
-// CREARA LOS BOTONES PARA ACEPTAR O CANCELAR Y LUEGO LO OCULTARA CUANDO SE ELIJA UNA OPCION
-function crearBotonQuieroNoQuiero() {
-    botonQuiero =`<div class="boton-quiero" id= "Quiero" value="quiero">
-                <a onclick="quiero()">Quiero</a>
-    </div>`
-    botonNoQuiero =`<div class="boton-quiero" id= "noquiero" value="noquiero">
-        <a onclick="noQuiero()">No Quiero</a>
-    </div>`
-
-    $(`#quiero-noquiero`).append(botonQuiero);
-    $(`#quiero-noquiero`).append(botonNoQuiero);
-}
 
 // ORDENA DE MENOR A MAYOR PARA IMPLEMENTAR EN EL TRUCO
 function ordenarArrayDeMenoraMayor(array){
@@ -327,10 +276,9 @@ function jugarCartaWeb() {
 function primeraManoWeb() {
     if( envido(manoOponente) > 25){
         // si el envido es mayor a 25 cantar ENVIDO
-        crearBotonQuieroNoQuiero();
         cantarEnvido();
+        ocultarEnvido();
     }
-    ocultarEnvido();
     jugarCartaWeb();
 }
 
@@ -488,13 +436,25 @@ function repartirCartas(){
     $(`#manoJugador`).append( acumulador);
     puntosEnvidoJugador = envido(manoJugador);
     puntosEnvidoOponente = envido(manoOponente);
-    manoAleatoria();
+    
     crearDorso();
     $(`#repartir-cartas`).hide();
-    $(`#cantar-truco`).show();
+    $(`#cantar-truco`).hide();
     $(`#ir-al-mazo`).show();
     $(`#envido`).show();
     ordenarArrayDeMenoraMayor(manoOponente);
+    if(yaSeJugo == "no"){
+        return manoAleatoria();
+    }else if(yaSeJugo == "si"){
+        if(soyMano == true){
+            soyMano = false;
+            mostarVisorTexto(`Empieza Jugando la Web, es Mano`);
+            return primeraManoWeb();
+        }else if(soyMano == false){
+            mostarVisorTexto(`Empieza Jugando tu ${jugador}, eres Mano`);
+            return soyMano = true;
+        }
+    }
 }
 
 // GUARDA LOS PUNTOS DEL JUGADOR
@@ -627,40 +587,66 @@ function lanzaCartaWebParaGanar() {
             faceRonda2 = "Web";
             //comparar con faceRonda1 para ver si hay empate y se termina
             if(faceRonda1 == "empate"){
-                terminoMano();
-                return mostarVisorTexto(`la Web gano, te toca ${jugador}.`);
+                jugarCartaOponete(manoOponente[1],`carta2Webj`);
+                removerCartasSegundaMano(manoOponente,manoOponente[0]);
+                mostarVisorTexto(`la Web gano, te toca ${jugador}.`);
+                return comparacionDeFaces();
             }else if(faceRonda1 == "Jugador"){
             jugarCartaOponete(manoOponente[1],`carta2Webj`);
             removerCartasSegundaMano(manoOponente,manoOponente[0]);
-            comparacionDeFaces();
-            return lanzaCartaWebMasBaja();
+            lanzaCartaWebMasBaja();
+            return comparacionDeFaces();
             }
         }else if(manoOponente[1].valor == valorCarta2j){
             faceRonda2 = "empate";
             //comparar con faceRonda1 para ver si hay empate y se termina
             if(faceRonda1 == "Web"){
-                terminoMano();
-                return mostarVisorTexto(`la Web gano, porque hizo primera.`);
+                jugarCartaOponete(manoOponente[1],`carta2Webj`);
+                removerCartasSegundaMano(manoOponente,manoOponente[0]);
+                mostarVisorTexto(`la Web gano, porque hizo primera.`);
+                return comparacionDeFaces();
             }else if (faceRonda1 == "Jugador"){
-                terminoMano();
-                return mostarVisorTexto(`${jugador} Ganaste!, porque hiciste primera.`);
+                jugarCartaOponete(manoOponente[1],`carta2Webj`);
+                removerCartasSegundaMano(manoOponente,manoOponente[0]);
+                mostarVisorTexto(`${jugador} Ganaste!, porque hiciste primera.`);
+                return comparacionDeFaces();
+            }else if (faceRonda1 == "empate"){
+                if(soyMano){
+                    mostarVisorTexto(`Te toca Jugar ${Jugador}`);
+                    return mostarVisorTexto(`Se define en la ultima`);
+                }else{
+                    jugarCartaOponete(manoOponente[1],`carta2Webj`);
+                    removerCartasSegundaMano(manoOponente,manoOponente[0]);
+                    mostarVisorTexto(`Se define en la ultima`);
+                    return comparacionDeFaces();
+                }
             }
         }else if(manoOponente[1].valor < valorCarta2j){
             faceRonda2 = "Jugador";
             //comparar con faceRonda1 para ver si hay empate y se termina
             if(faceRonda1 == "empate"){
-                return terminoMano();
+                jugarCartaOponete(manoOponente[1],`carta2Webj`);
+                removerCartasSegundaMano(manoOponente,manoOponente[0]);
+                mostarVisorTexto(`Ganaste ${Jugador}, porque hiciste primera.`);
+                return comparacionDeFaces();
             }else if(faceRonda1 == "Web"){
                 jugarCartaOponete(manoOponente[1],`carta2Webj`);
                 removerCartasSegundaMano(manoOponente,manoOponente[0]);
-                return mostarVisorTexto(`la Web ha jugado, te toca ${jugador}.`);
+                mostarVisorTexto(`la Web ha jugado, te toca ${jugador}.`);
+                return comparacionDeFaces();
+            }else if(faceRonda1 == "Jugador"){
+                jugarCartaOponete(manoOponente[1],`carta2Webj`);
+                removerCartasSegundaMano(manoOponente,manoOponente[0]);
+                mostarVisorTexto(`${jugador} Ganaste!, porque hiciste primera.`);
+                return comparacionDeFaces();
             }
         }
     }
     let carta1web = parseInt($("#cartaWeb1").attr("value"));
     if(valorCarta1j == carta1web){
         //debe lanzar la mejor carta
-        return lanzaCartaWebMasAlta();
+        lanzaCartaWebMasAlta();
+        return comparacionDeFaces();
     }else{
         if(valorCarta1j > 0){
             ocultarEnvido();
@@ -726,8 +712,8 @@ function compararRondas() {
             return mostarVisorTexto(`Juegas tu ${jugador}`);
         }else if(carta2j < carta2web){
             faceRonda2 = "Web";
-            mostarVisorTexto(`Juegas la Web ya que gano`);
             comparacionDeFaces();
+            mostarVisorTexto(`Juegas la Web ya que gano`);
             return lanzaCartaWebMasBaja();
         }if(carta2j == carta2web){
             faceRonda2 = "empate";
@@ -800,13 +786,15 @@ function comparacionDeFaces() {
             //gana el jugador
             puntajeJugador = parseInt( puntajeJugador ) + parseInt( puntosdelTruco);
             mostarVisorTexto(`Ganaste el truco ${jugador},
-            presiona Repartir Cartas para continuar`);
+
+presiona Repartir Cartas para continuar`);
             return terminoMano();
         }else{
             //gana la web
             puntajeWeb = parseInt( puntajeWeb ) + parseInt( puntosdelTruco);
             mostarVisorTexto(`Perdiste la mano,
-            presiona Repartir Cartas para continuar`);
+
+presiona Repartir Cartas para continuar`);
             return terminoMano();
         }
     }else if(faceRonda1 == faceRonda3){
@@ -814,13 +802,15 @@ function comparacionDeFaces() {
             //gana la web
             puntajeWeb = parseInt( puntajeWeb ) + parseInt( puntosdelTruco);
             mostarVisorTexto(`Perdiste la mano,
-            presiona Repartir Cartas para continuar`);
+
+presiona Repartir Cartas para continuar`);
             return terminoMano();
         }else if(faceRonda1 == "Jugador"){
             //gana el jugador
             puntajeJugador = parseInt( puntajeJugador ) + parseInt( puntosdelTruco);
             mostarVisorTexto(`Ganaste el truco ${jugador},
-            presiona Repartir Cartas para continuar`);
+
+presiona Repartir Cartas para continuar`);
             return terminoMano();
         }else if(faceRonda1 == "empate" ){
             //la mano gana
@@ -828,13 +818,15 @@ function comparacionDeFaces() {
                 //gana el jugador
                 puntajeJugador = parseInt( puntajeJugador ) + parseInt( puntosdelTruco);
                 mostarVisorTexto(`Ganaste el truco ${jugador},
-                presiona Repartir Cartas para continuar`);
+
+presiona Repartir Cartas para continuar`);
                 return terminoMano();
             }else{
                 //gana la web
                 puntajeWeb = parseInt( puntajeWeb ) + parseInt( puntosdelTruco);
                 mostarVisorTexto(`Perdiste la mano,
-                presiona Repartir Cartas para continuar`);
+
+presiona Repartir Cartas para continuar`);
                 return terminoMano();
             }
         }
@@ -842,52 +834,60 @@ function comparacionDeFaces() {
         //gana el jugador
         puntajeJugador = parseInt( puntajeJugador ) + parseInt( puntosdelTruco);
         mostarVisorTexto(`Ganaste el truco ${jugador},
-        presiona Repartir Cartas para continuar`);
+
+presiona Repartir Cartas para continuar`);
         return terminoMano();
     }else if((faceRonda1 == "empate" ) && (faceRonda2 == "Web")){
         //gana la web
         puntajeWeb = parseInt( puntajeWeb ) + parseInt( puntosdelTruco);
         mostarVisorTexto(`Perdiste la mano, 
-        presiona Repartir Cartas para continuar`);
+
+presiona Repartir Cartas para continuar`);
         return terminoMano();
     }else if((faceRonda1 == "Jugador" ) && (faceRonda2 == "empate")){
         //gana el jugador
         puntajeJugador = parseInt( puntajeJugador ) + parseInt( puntosdelTruco);
         mostarVisorTexto(`Ganaste el truco ${jugador},
-        presiona Repartir Cartas para continuar`);
+
+presiona Repartir Cartas para continuar`);
         return terminoMano();
     }else if((faceRonda1 == "Web" ) && (faceRonda2 == "empate")){
         //gana la web
         puntajeWeb = parseInt( puntajeWeb ) + parseInt( puntosdelTruco);
-        mostarVisorTexto(`Perdiste la mano, 
-        presiona Repartir Cartas para continuar`);
+        mostarVisorTexto(`Perdiste la mano,
+
+presiona Repartir Cartas para continuar`);
         return terminoMano();
     }else if(faceRonda2 == faceRonda3){
         if(faceRonda3 == "Web"){
             //gana la web
             puntajeWeb = parseInt( puntajeWeb ) + parseInt( puntosdelTruco);
-            mostarVisorTexto(`Perdiste la mano, 
-            presiona Repartir Cartas para continuar`);
+            mostarVisorTexto(`Perdiste la mano,
+
+presiona Repartir Cartas para continuar`);
             return terminoMano();
         }else if(faceRonda3 == "Jugador"){
             //gana el jugador
             puntajeJugador = parseInt( puntajeJugador ) + parseInt( puntosdelTruco);
-            mostarVisorTexto(`Ganaste el truco ${jugador}, 
-            presiona Repartir Cartas para continuar`);
+            mostarVisorTexto(`Ganaste el truco ${jugador},
+
+presiona Repartir Cartas para continuar`);
             return terminoMano();
         }else if(faceRonda3 == "empate"){
             //la mano gana
             if(soyMano){
                 //gana el jugador
                 puntajeJugador = parseInt( puntajeJugador ) + parseInt( puntosdelTruco);
-                mostarVisorTexto(`Ganaste el truco ${jugador}, 
-                presiona Repartir Cartas para continuar`);
+                mostarVisorTexto(`Ganaste el truco ${jugador},
+
+presiona Repartir Cartas para continuar`);
                 return terminoMano();
             }else{
                 //gana la web
                 puntajeWeb = parseInt( puntajeWeb ) + parseInt( puntosdelTruco);
-                mostarVisorTexto(`Perdiste la mano, 
-                presiona Repartir Cartas para continuar`);
+                mostarVisorTexto(`Perdiste la mano,
+
+presiona Repartir Cartas para continuar`);
                 return terminoMano();
             }
         }
@@ -895,14 +895,16 @@ function comparacionDeFaces() {
         if(faceRonda1 == "Web"){
             //gana la web
             puntajeWeb = parseInt( puntajeWeb ) + parseInt( puntosdelTruco);
-            mostarVisorTexto(`Perdiste la mano, 
-            presiona Repartir Cartas para continuar`);
+            mostarVisorTexto(`Perdiste la mano,
+
+presiona Repartir Cartas para continuar`);
             return terminoMano();
         }else if(faceRonda1 == "Jugador"){
             //gana el jugador
             puntajeJugador = parseInt( puntajeJugador ) + parseInt( puntosdelTruco);
             mostarVisorTexto(`Ganaste el truco ${jugador},
-            presiona Repartir Cartas para continuar`);
+
+presiona Repartir Cartas para continuar`);
             return terminoMano();
         }else if(faceRonda1 == "empate"){
             //se sigue jugando.
@@ -944,37 +946,6 @@ $("#visortexto").val(`${mensajeamostrar}`);
 
 }
 
-
-// ******/*/*/*/*/********/*/*/*/****** SIN USO AUN  *******/*/*/*/*/*/**********/*/*/* */ */
-
-/* function botontruco() {
-    $(`#cantar-retruco`).hide();
-    $(`#cantar-vale-4`).hide();
-    if( estadoTruco == ""){
-        $(`#cantar-truco`).show();
-    }else if( estadoTruco == "truco"){
-        $(`#cantar-retruco`).show();
-    }else if( estadoTruco == "retruco"){
-        $(`#cantar-vale-4`).show();
-    }
-}
-function botonenvido() {
-    $(`#real-envido`).hide();
-    $(`#falta-envido`).hide();
-    $(`#envido-envido`).hide();
-    if( estadoEnvido == ""){
-        $(`#envido`).show();
-    }else if( estadoEnvido == "envido"){
-        $(`#envido-envido`).show();
-        $(`#real-envido`).show();
-    }else if( estadoEnvido == "envidoenvido"){
-        $(`#real-envido`).show();
-        $(`#falta-envido`).show();
-    }else if( estadoEnvido == "Realenvido"){
-        $(`#falta-envido`).show();
-    }
-} */
-// ******/*/*/*/*/********/*/*/*/****** SIN USO AUN  *******/*/*/*/*/*/**********/*/*/* */ */
 
 function ocultarbotones(){
     $(`#repartir-cartas`).show();

@@ -107,9 +107,8 @@ let valorCarta3j = 0;
 let contadorturnocarta = 1; // contador para creacion de cartas jugador
 let contadorTurnoCartaWeb = 1; // contador para creacion de cartas Web
 
-let validarQuiero = "aun no acepto" // proyecto aun si uso
-
-//let facetruco = "Primera";
+let yaSeJugo = "no"; //verifica que solo se ejecute una vez la mano aleatoria 
+//y para que luego cambie la mano cada vez que se termine un turno 
 
 let divVacio =`<div></div>`
 

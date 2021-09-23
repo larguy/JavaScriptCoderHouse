@@ -5,7 +5,6 @@
         grid-template-columns: repeat(6.25rem) ;
         grid-auto-rows: minmax(6.25rem, auto);
         grid-template-areas:
-        " nav nav nav  nav "
         " sb main main  main"
         " asd main main  main "
         " pie pie pie  pie ";
@@ -400,6 +399,8 @@ border-radius: 50%;
     background-color: transparent;
     border: none;
     font-family:inherit;
-    font-size: 1.2em;
+    font-weight: bolder;
+    font-size: 1.4em;
     word-break: break-all;
+    color: rgb(0, 0, 0);
 }
